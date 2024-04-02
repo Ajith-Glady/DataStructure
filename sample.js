@@ -24,7 +24,7 @@ class linkedList {
 
    prepend(value){
       const node = new Node(value)
-      if(this.isEmpty()){
+      if(this.size === 0){
          this.head = node
       }else{
          node.next = this.head
@@ -39,7 +39,7 @@ class linkedList {
 
    append(value){
       const node = new Node(value)
-      if(this.isEmpty()){
+      if(this.size == 0){
          this.head = node
       }else{
          let previous = this.head
@@ -56,8 +56,8 @@ class linkedList {
 
    addBetween(value,index){
       if(index < 0 || index > this.size){
-         return
-      }else if(index == 0 ){
+         return false
+      }else if(index === 0){
          this.prepend(value)
       }else{
          const node = new Node(value)
@@ -69,29 +69,30 @@ class linkedList {
          previous.next = node
          this.size++
       }
+      return true
    }
 
 
    // Remove node form list
 
-   deleteNode(index){
+   deleteIndex(index){
       if(index < 0 || index > this.size){
-         return
+         return 0
       }
-      let removeNode
+      let removeIndex
       if(index === 0){
-         removeNode = this.head
+         removeIndex = this.head
          this.head = this.head.next
       }else{
          let previous = this.head
          for(let i=0 ; i<index-1 ; i++){
             previous = previous.next
          }
-         removeNode = previous.next
-         previous.next = removeNode.next
+         removeIndex = previous.next
+         previous.next = previous.next.next
       }
       this.size--
-      return removeNode.value
+      return removeIndex.value
    }
 
    
@@ -139,19 +140,44 @@ class linkedList {
 
 
    // Reverse the linked list
-
+   
    reverse(){
       let previous = null
       let current = this.head
-      
       while(current){
          let next = current.next
          current.next = previous
          previous = current
          current = next
-      } 
+      }
       this.head = previous
-      return 1
+   }
+
+
+   // Find middle using slow pointer and fast pointer
+
+   center(){
+      let fast = this.head
+      let slow = this.head
+      while(fast != null && fast.next != null){
+         fast = fast.next.next
+         slow = slow.next
+      }
+      return slow.value
+
+   }
+
+   deleteMiddle(){
+      let fast = this.head
+      let slow = this.head
+      let previous = null
+      while(fast != null && fast.next != null){
+         previous = slow
+         slow = slow.next
+         fast = fast.next.next
+      }
+      previous.next = previous.next.next
+      return true
    }
 
 
@@ -193,5 +219,7 @@ list.addBetween(100,2)
 
 list.print()
 
-console.log(list.reverse());
+// list.reverse()
+list.print()
+list.deleteIndex(2)
 list.print()
