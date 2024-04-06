@@ -44,3 +44,5 @@ console.log(queue.isEmpty());
 console.log(queue.peek());
 console.log(queue.size());
 queue.print()
+console.log(queue.dequeue());
+queue.print()
